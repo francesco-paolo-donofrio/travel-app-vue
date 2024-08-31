@@ -4,9 +4,37 @@
 </template>
 
 <script>
+  import axios from 'axios';
+  import { store } from './store.js';
   export default {
-    name: 'App'
+    name: 'App',
+    components: {
+    
+  },
+  data() {
+    return {
+      store,
+      days: [],
+      travels: [],
+    }
+  },
+  methods: {
+    getDays() {
+            axios.get(this.store.apiBaseUrl + '/days').then((res) => {
+                this.days = res.data.results;
+            });
+        },
+        getTravels() {
+          axios.get(this.store.apiBaseUrl + '/travels').then((res) => {
+                this.travels = res.data.results;
+            });
+        }
+  },
+  mounted() {
+    this.getDays();
+    this.getTravels();
   }
+  }  
 </script>
 
 <style lang="scss" scoped>
